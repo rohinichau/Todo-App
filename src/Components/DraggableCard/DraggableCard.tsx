@@ -32,37 +32,44 @@ const DraggableCard = () => {
 
   const handleLayoutChange = (newLayout: Layout[]) => {
     setLayout(newLayout);
-    const pend: string[] = [];
-    const inProg: string[] = [];
-    const complete: string[] = [];
+    let pend: string[] = [];
+    let inProg: string[] = [];
+    let complete: string[] = [];
     for (let i of newLayout) {
       if (i.x === 1) {
-        inProg.push(i.i);
+        inProg = [...inProg, i.i];
+        // inProg.push(i.i);
       }
       if (i.x === 2) {
-        complete.push(i.i);
+        complete = [...complete, i.i];
+        // complete.push(i.i);
       }
       if (i.x === 0) {
-        pend.push(i.i);
+        pend = [...pend, i.i];
+        // pend.push(i.i);
       }
     }
-    const tmp = [];
+    let tmp: Task[] = [];
     for (let item of task) {
       if (inProg?.includes(item.id)) {
         item.status = "In-Progress";
-        tmp.push(item);
+        tmp = [...tmp, item];
+        // tmp.push(item);
       } else if (complete?.includes(item.id)) {
         item.status = "Completed";
-        tmp.push(item);
+        tmp = [...tmp, item];
+        // tmp.push(item);
       } else if (pend?.includes(item.id)) {
         item.status = "Pending";
-        tmp.push(item);
+        tmp = [...tmp, item];
+        // tmp.push(item);
       } else {
-        tmp.push(item);
+        tmp = [...tmp, item];
+        // tmp.push(item);
       }
     }
 
-    const filteredData = tmp.filter(
+    const filteredData: Task[] = tmp.filter(
       (value, index, self) => self.findIndex((v) => v.id === value.id) === index
     );
 
